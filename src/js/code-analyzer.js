@@ -184,19 +184,19 @@ function updateExpression(env, obj, isSeq, isFirstRun){
     return writeUpExp(updateEnv(extendEnv(env, vr, vl)), vr, op, isSeq, isFirstRun);
 }
 
-function needTODeleteArrExp(objName, val, isSeq, isFirstRun){
-    if(!needToDeleteExp(objName + '[0]') && !isFirstRun)
-        addToCode(isSeq ? (objName + ' = ' + val + ', ') : (objName + ' = ' + val +';\n'), 'white');
-}
+// function needTODeleteArrExp(objName, val, isSeq, isFirstRun){
+//     if(!needToDeleteExp(objName + '[0]') && !isFirstRun)
+//         addToCode(isSeq ? (objName + ' = ' + val + ', ') : (objName + ' = ' + val +';\n'), 'white');
+// }
 
-function arrayExpression(env, obj, objName, isSeq, isFirstRun){
+function arrayExpression(env, obj, objName /*, isSeq, isFirstRun*/){
     let rightObj = obj.right, length = rightObj.elements.length, val = '[', tmpVal, i = 0;
     while (i < length) {
         tmpVal = getVal(env, rightObj.elements[i]);
         env = updateEnv(extendEnv(env, objName + '[' + i + ']', tmpVal));
         val += tmpVal + ((++i < length) ? ', ' : ']');
     }
-    needTODeleteArrExp(objName, val, isSeq, isFirstRun);
+    //needTODeleteArrExp(objName, val, isSeq, isFirstRun);
     return extendEnv(env, objName, val);
 }
 
